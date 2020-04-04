@@ -1,22 +1,19 @@
-const express = require("express");
-const path = require("path");
-const fs = require('fs');
-const util = require('util');
+var express = require("express");
+var path = require("path");
+var fs = require('fs');
+var util = require('util');
 
-
-const app = express();
-const PORT = process.env.PORT || 3000;
+var app = express();
+var PORT = process.env.PORT || 3000;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "./public")));
 
-
 let writefileAsync = util.promisify(fs.writeFile);
 let appendfileAsync = util.promisify(fs.appendFile);
 let readFileAsync = util.promisify(fs.readFile);
 let notesList;
-
 
 app.get("/", function(req, res) {
     res.sendFile(path.join(__dirname, "./public/index.html"));
@@ -65,7 +62,6 @@ app.delete("/api/notes/:id", function(req, res) {
         });
     res.json(id);
 });
-
 
 
 app.listen(PORT, function() {
