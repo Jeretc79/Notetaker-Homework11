@@ -1,23 +1,23 @@
-const $noteTitle = $(".note-title");
-const $noteText = $(".note-textarea");
-const $saveNoteBtn = $(".save-note");
-const $newNoteBtn = $(".new-note");
-const $editNoteBtn = $(".edit-note");
-const $noteList = $(".list-container .list-group");
+var $noteTitle = $(".note-title");
+var $noteText = $(".note-textarea");
+var $saveNoteBtn = $(".save-note");
+var $newNoteBtn = $(".new-note");
+var $editNoteBtn = $(".edit-note");
+var $noteList = $(".list-container .list-group");
 
 
-const activeNote = {};
+var activeNote = {};
 
 
-const getNotes = function() {
+var getNotes = function() {
     return $.ajax({
         url: "/api/notes",
         method: "GET"
     });
 };
 
-// A function for saving a note to the db
-const saveNote = function(note) {
+
+var saveNote = function(note) {
     return $.ajax({
         url: "/api/notes",
         data: note,
@@ -26,7 +26,7 @@ const saveNote = function(note) {
 };
 
 
-const deleteNote = function(id) {
+var deleteNote = function(id) {
     return $.ajax({
         url: "api/notes/" + id,
         method: "DELETE"
@@ -34,7 +34,7 @@ const deleteNote = function(id) {
 };
 
 
-const renderActiveNote = function() {
+var renderActiveNote = function() {
     $saveNoteBtn.hide();
     if (activeNote.id || activeNote.id === 0) {
         $editNoteBtn.show();
@@ -50,7 +50,7 @@ const renderActiveNote = function() {
     }
 };
 
-const handleNoteEdit = function() {
+var handleNoteEdit = function() {
     $editNoteBtn.hide();
     $saveNoteBtn.show();
     $noteTitle.attr("readonly", false);
@@ -58,7 +58,7 @@ const handleNoteEdit = function() {
 }
 
 
-const handleNoteSave = function() {
+var handleNoteSave = function() {
     if (activeNote.id || activeNote.id === 0) {
         activeNote.title = $noteTitle.val();
         activeNote.text = $noteText.val();
@@ -68,7 +68,7 @@ const handleNoteSave = function() {
             renderActiveNote();
         });
     } else {
-        const newNote = {
+        var newNote = {
             title: $noteTitle.val(),
             text: $noteText.val()
         };
@@ -81,11 +81,11 @@ const handleNoteSave = function() {
 };
 
 
-const handleNoteDelete = function(event) {
+var handleNoteDelete = function(event) {
 
     event.stopPropagation();
 
-    const note = $(this)
+    var note = $(this)
         .parent(".list-group-item")
         .data();
 
@@ -100,20 +100,20 @@ const handleNoteDelete = function(event) {
 };
 
 
-const handleNoteView = function() {
+var handleNoteView = function() {
     activeNote = $(this).data();
     renderActiveNote();
 };
 
 
-const handleNewNoteView = function() {
+var handleNewNoteView = function() {
     $editNoteBtn.hide();
     activeNote = {};
     renderActiveNote();
 };
 
 
-const handleRenderSaveBtn = function() {
+var handleRenderSaveBtn = function() {
     if (!$noteTitle.val().trim() || !$noteText.val().trim()) {
         $saveNoteBtn.hide();
     } else {
@@ -122,17 +122,17 @@ const handleRenderSaveBtn = function() {
 };
 
 
-const renderNoteList = function(notes) {
+var renderNoteList = function(notes) {
     $noteList.empty();
 
-    const noteListItems = [];
+    var noteListItems = [];
 
-    for (const i = 0; i < notes.length; i++) {
-        const note = notes[i];
+    for (var i = 0; i < notes.length; i++) {
+        var note = notes[i];
         note.id = i;
-        const $li = $("<li class='list-group-item'>").data(note);
-        const $span = $("<span>").text(note.title);
-        const $delBtn = $(
+        var $li = $("<li class='list-group-item'>").data(note);
+        var $span = $("<span>").text(note.title);
+        var $delBtn = $(
             "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
         );
 
@@ -144,7 +144,7 @@ const renderNoteList = function(notes) {
 };
 
 
-const getAndRenderNotes = function() {
+var getAndRenderNotes = function() {
     return getNotes().then(function(data) {
         renderNoteList(data);
     });
