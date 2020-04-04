@@ -5,10 +5,10 @@ var $newNoteBtn = $(".new-note");
 var $editNoteBtn = $(".edit-note");
 var $noteList = $(".list-container .list-group");
 
-// activeNote is used to keep track of the note in the textarea
+
 var activeNote = {};
 
-// A function for getting all notes from the db
+
 var getNotes = function() {
     return $.ajax({
         url: "/api/notes",
@@ -80,7 +80,7 @@ var handleNoteSave = function() {
     }
 };
 
-// Delete the clicked note
+
 var handleNoteDelete = function(event) {
 
     event.stopPropagation();
